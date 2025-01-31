@@ -2,14 +2,10 @@
 
 namespace ETicaretAPI.Domain.Entitites
 {
-    public class Product : BaseEntity
+    public class Customer : BaseEntity
     {
         public string Name { get; set; }
-        public int Stock { get; set; }
-        public long Price { get; set; }
-        // çoka çok ilişki burada order'ı , orderda productı
+        // 1 sipariş 1 müşteriye ait olabilir , 1 müşterinin n tane siparişi olabilir 1 e çok müşteri - orders ilişkisi
         public ICollection<Order> Orders { get; set; }
-         
-
     }
 }
