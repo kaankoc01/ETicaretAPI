@@ -40,13 +40,13 @@ namespace ETicaretAPI.Infrastructure.Services.Storage.Local
 
             foreach (IFormFile file in files)
             {
-                string fileNewName = await FileRenameAsync(path, file.Name, HasFile);
+                string fileNewName = await FileRenameAsync(uploadPath, file.FileName, HasFile);
 
 
                 await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
                 datas.Add((fileNewName, $"{path}\\{fileNewName}"));
             }
-            
+
             return datas;
 
 
@@ -60,7 +60,7 @@ namespace ETicaretAPI.Infrastructure.Services.Storage.Local
             DirectoryInfo directoryInfo = new(path);
             return directoryInfo.GetFiles().Select(x => x.Name).ToList();
         }
-        
+
         public bool HasFile(string path, string fileName) => File.Exists($"{path}\\{fileName}");
     }
 }

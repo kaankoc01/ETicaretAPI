@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ETicaretAPI.Infrastructure.Services.Storage.Azure
 {
-    public class AzureStorage : Storage,IAzureStorage
+    public class AzureStorage : Storage, IAzureStorage
     {
         private readonly BlobServiceClient _blobServiceClient;
         BlobContainerClient _blobContainerClient;
@@ -14,7 +14,7 @@ namespace ETicaretAPI.Infrastructure.Services.Storage.Azure
         public AzureStorage(IConfiguration configuration)
         {
             _blobServiceClient = new(configuration["Storage:Azure"]);
-           
+
         }
 
         public async Task<List<(string fileName, string pathOrContainerName)>> UploadAsync(string containerName, IFormFileCollection files)

@@ -4,7 +4,7 @@ namespace ETicaretAPI.Infrastructure.Services.Storage
 {
     public class Storage
     {
-        protected delegate bool HasFile(string pathOrContainerName ,string fileName);
+        protected delegate bool HasFile(string pathOrContainerName, string fileName);
 
         //ortak olup davranışı değişmeyecek memberlar. burdan kalıtımla alınacak.
         protected async Task<string> FileRenameAsync(string pathOrContainerName, string fileName, HasFile hasFileMethod, bool first = true)
@@ -56,9 +56,9 @@ namespace ETicaretAPI.Infrastructure.Services.Storage
                         }
                     }
                 }
-            //    if (File.Exists($"{path}\\{newFileName}"))
-                  if(hasFileMethod(pathOrContainerName, newFileName))
-                    return await FileRenameAsync(pathOrContainerName, newFileName, hasFileMethod,false);
+
+                if (hasFileMethod(pathOrContainerName, newFileName))
+                    return await FileRenameAsync(pathOrContainerName, newFileName, hasFileMethod, false);
                 else
                     return newFileName;
             });
