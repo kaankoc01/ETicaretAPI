@@ -1,17 +1,17 @@
 ﻿using ETicaretAPI.Infrastructure.Operations;
 
-namespace ETicaretAPI.Infrastructure.Services
+namespace ETicaretAPI.Infrastructure.Services.Storage
 {
-    public class FileService
+    public class Storage
     {
+        protected delegate bool HasFile(string pathOrContainerName ,string fileName);
 
-
-        async Task<string> FileRenameAsync(string path, string fileName, bool first = true)
+        //ortak olup davranışı değişmeyecek memberlar. burdan kalıtımla alınacak.
+        protected async Task<string> FileRenameAsync(string pathOrContainerName, string fileName, HasFile hasFileMethod, bool first = true)
         {
             string newFileName = await Task.Run(async () =>
             {
                 string extension = Path.GetExtension(fileName);
-
                 string newFileName = string.Empty;
                 if (first)
                 {
@@ -54,23 +54,16 @@ namespace ETicaretAPI.Infrastructure.Services
                         {
                             newFileName = $"{Path.GetFileNameWithoutExtension(newFileName)}-2{extension}";
                         }
-
                     }
-
                 }
-
-
-                if (File.Exists($"{path}\\{newFileName}"))
-                    return await FileRenameAsync(path, newFileName, false);
+            //    if (File.Exists($"{path}\\{newFileName}"))
+                  if(hasFileMethod(pathOrContainerName, newFileName))
+                    return await FileRenameAsync(pathOrContainerName, newFileName, hasFileMethod,false);
                 else
                     return newFileName;
-
-
             });
             return newFileName;
         }
 
-
     }
 }
-
