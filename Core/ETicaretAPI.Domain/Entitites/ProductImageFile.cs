@@ -2,6 +2,8 @@
 {
     public class ProductImageFile : File
     {
-        public int Width { get; set; }
+       
+        // çoktan çoğa ilişki
+        public ICollection<Product> Products { get; set; }
     }
 }
