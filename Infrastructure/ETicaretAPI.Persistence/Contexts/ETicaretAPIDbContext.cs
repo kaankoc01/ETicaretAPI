@@ -1,11 +1,13 @@
 ﻿using ETicaretAPI.Domain.Entitites;
 using ETicaretAPI.Domain.Entitites.Common;
+using ETicaretAPI.Domain.Entitites.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using File = ETicaretAPI.Domain.Entitites.File;
 
 namespace ETicaretAPI.Persistence.Contexts
 {
-    public class ETicaretAPIDbContext : DbContext
+    public class ETicaretAPIDbContext : IdentityDbContext<AppUser, AppRole,string>
     {
         public ETicaretAPIDbContext(DbContextOptions options) : base(options)
         {

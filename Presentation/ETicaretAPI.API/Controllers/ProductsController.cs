@@ -1,13 +1,4 @@
-﻿using ETicaretAPI.Application.Abstractions.Storage;
-using ETicaretAPI.Application.Repositories;
-using ETicaretAPI.Application.RequestParameters;
-using ETicaretAPI.Application.ViewModels.Products;
-using ETicaretAPI.Domain.Entitites;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using ETicaretAPI.Application.Features.Commands.Product.CreateProduct;
+﻿using ETicaretAPI.Application.Features.Commands.Product.CreateProduct;
 using ETicaretAPI.Application.Features.Commands.Product.DeleteProduct;
 using ETicaretAPI.Application.Features.Commands.Product.UpdateProduct;
 using ETicaretAPI.Application.Features.Commands.ProductImageFile.RemoveProductImage;
@@ -15,6 +6,9 @@ using ETicaretAPI.Application.Features.Commands.ProductImageFile.UploadProductIm
 using ETicaretAPI.Application.Features.Queries.Product.GetAllProduct;
 using ETicaretAPI.Application.Features.Queries.Product.GetByIdProduct;
 using ETicaretAPI.Application.Features.Queries.ProductImageFile.GetProductImages;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace ETicaretAPI.API.Controllers
 {
