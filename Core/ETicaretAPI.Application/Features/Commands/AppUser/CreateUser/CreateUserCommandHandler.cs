@@ -11,7 +11,7 @@ namespace ETicaretAPI.Application.Features.Commands.AppUser.CreateUser
         public CreateUserCommandHandler(UserManager<Domain.Entitites.Identity.AppUser> userManager)
         {
             _userManager = userManager;
-        }
+        } 
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request,
             CancellationToken cancellationToken)
