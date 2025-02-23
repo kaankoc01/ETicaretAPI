@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
+
 //builder.Services.AddStorage(StorageType.Azure); þeklinde kullanýlabilir 
 
 builder.Services.AddStorage<LocalStorage>();
