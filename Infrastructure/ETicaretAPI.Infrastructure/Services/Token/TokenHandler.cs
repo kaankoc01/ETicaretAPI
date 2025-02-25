@@ -1,7 +1,9 @@
 ﻿using ETicaretAPI.Application.Abstractions.Token;
+using ETicaretAPI.Domain.Entitites.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -17,7 +19,7 @@ namespace ETicaretAPI.Infrastructure.Services.Token
             _configuration = configuration;
         }
 
-        public Application.DTOs.Token CreateAccessToken(int second)
+        public Application.DTOs.Token CreateAccessToken(int second,AppUser user)
         {
             Application.DTOs.Token token = new();
 
@@ -34,7 +36,12 @@ namespace ETicaretAPI.Infrastructure.Services.Token
                 issuer: _configuration["Token:Issuer"],
                 expires: token.Expiration,
                 notBefore: DateTime.UtcNow,
-                signingCredentials: signingCredentials
+                signingCredentials: signingCredentials,
+                claims: new List<Claim>
+                {
+                    new(ClaimTypes.Name, user.UserName),
+                    
+                }
             );
 
             // Token'ı oluştur

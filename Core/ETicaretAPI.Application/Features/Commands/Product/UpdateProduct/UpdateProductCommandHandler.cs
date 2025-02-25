@@ -1,10 +1,6 @@
 ﻿using ETicaretAPI.Application.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace ETicaretAPI.Application.Features.Commands.Product.UpdateProduct
 {
@@ -12,22 +8,23 @@ namespace ETicaretAPI.Application.Features.Commands.Product.UpdateProduct
     {
         private readonly IProductReadRepository _productReadRepository;
         private readonly IProductWriteRepository _productWriteRepository;
+        private readonly ILogger<UpdateProductCommandHandler> _logger;
 
-        public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository)
+        public UpdateProductCommandHandler(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, ILogger<UpdateProductCommandHandler> logger)
         {
             _productReadRepository = productReadRepository;
             _productWriteRepository = productWriteRepository;
+            _logger = logger;
         }
-
 
         public async Task<UpdateProductCommandResponse> Handle(UpdateProductCommandRequest request, CancellationToken cancellationToken)
         {
             Domain.Entitites.Product product = await _productReadRepository.GetByIdAsync(request.Id);
-
             product.Name = request.Name;
             product.Price = request.Price;
             product.Stock = request.Stock;
             await _productWriteRepository.SaveAsync();
+            _logger.LogInformation("Product güncellendi..");
             return new();
         }
     }
