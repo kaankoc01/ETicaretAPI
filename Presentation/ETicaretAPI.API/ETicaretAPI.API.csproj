@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Middlewares\" />
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\photo-images\" />
   </ItemGroup>
