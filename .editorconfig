@@ -1,0 +1,11 @@
+root = true
+
+# All files
+[*]
+indent_style = space
+
+# Xml files
+[*.xml]
+indent_size = 2
+[*.cs]
+dotnet_style_require_accessibility_modifiers = always:suggestion

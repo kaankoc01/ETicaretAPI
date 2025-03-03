@@ -19,6 +19,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpContextAccessor(); // clientten gelen request neticesinde HttpContext.Current nesnesine(katmanlardaki classlar üzerinden business logic fln ) eriþim saðlar.
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();

@@ -8,6 +8,8 @@ namespace ETicaretAPI.Domain.Entitites
         // 1 siparişte n tane ürün olabilir , 1 ürünün n tane siparişi olabilir çoktan çoğa ürün - orders ilişkisi
         public string Description { get; set; }
         public string Address { get; set; }
+        public Basket Basket { get; set; }
+
         // çoka çok ilişki burada product'ı , productta orderı
         public ICollection<Product> Products { get; set; }
        // 1 e çok ilişki

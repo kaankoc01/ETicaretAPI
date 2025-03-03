@@ -12,6 +12,7 @@ namespace ETicaretAPI.Domain.Entitites
         // bir ürünün birden fazla resmi olabilir ,//
         // çoktan çoğa ilişki
         public ICollection<ProductImageFile> ProductImageFiles { get; set; }
+        public ICollection<BasketItem> BasketItems { get; set; }
 
 
     }

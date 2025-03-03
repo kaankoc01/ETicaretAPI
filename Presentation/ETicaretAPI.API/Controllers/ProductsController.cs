@@ -30,6 +30,9 @@ namespace ETicaretAPI.API.Controllers
             GetAllProductQueryResponse response = await _mediator.Send(getAllProductQueryRequest);
             return Ok(response);
         }
+
+
+
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
@@ -92,9 +95,9 @@ namespace ETicaretAPI.API.Controllers
 
 
 
-        [HttpPut("[action]/{imageId}/{productId}")]
+        [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        public async Task<IActionResult> ChangeShowcase([FromQuery]ChangeShowcaseImageCommandRequest changeShowcaseImageCommandRequest)
+        public async Task<IActionResult> ChangeShowcaseImage([FromQuery]ChangeShowcaseImageCommandRequest changeShowcaseImageCommandRequest)
         {
             ChangeShowcaseImageCommandResponse response = await _mediator.Send(changeShowcaseImageCommandRequest);
             return Ok(response);
