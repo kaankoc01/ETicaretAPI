@@ -58,6 +58,7 @@ namespace ETicaretAPI.Persistence.Services
                     user.Baskets.Add(targetBasket);
                 }
                 await _basketWriteRepository.SaveAsync();
+                return targetBasket;
 
             }
             throw new Exception("Beklenmeyen bir hatayla karşılaşıldı.");
