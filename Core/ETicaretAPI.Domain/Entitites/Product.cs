@@ -8,7 +8,7 @@ namespace ETicaretAPI.Domain.Entitites
         public int Stock { get; set; }
         public float Price { get; set; }
         // çoka çok ilişki burada order'ı , orderda productı
-        public ICollection<Order> Orders { get; set; }
+       // public ICollection<Order> Orders { get; set; }
         // bir ürünün birden fazla resmi olabilir ,//
         // çoktan çoğa ilişki
         public ICollection<ProductImageFile> ProductImageFiles { get; set; }
