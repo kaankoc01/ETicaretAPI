@@ -6,7 +6,6 @@ namespace ETicaretAPI.Domain.Entitites
     {
         //  public Guid CustomerId { get; set; }
         // 1 siparişte n tane ürün olabilir , 1 ürünün n tane siparişi olabilir çoktan çoğa ürün - orders ilişkisi
-        public Guid BasketId { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
         public Basket Basket { get; set; }
