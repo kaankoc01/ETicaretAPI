@@ -21,6 +21,7 @@ namespace ETicaretAPI.Persistence.Contexts
         public DbSet<ProductImageFile> ProductImageFiles { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<CompletedOrder> CompletedOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,6 +39,11 @@ namespace ETicaretAPI.Persistence.Contexts
                 .HasForeignKey<Order>(b => b.Id);
 
             base.OnModelCreating(builder);
+
+            builder.Entity<Order>()
+                .HasOne(o => o.CompletedOrder)
+                .WithOne(co => co.Order)
+                .HasForeignKey<CompletedOrder>(co => co.OrderId);
         }
 
 

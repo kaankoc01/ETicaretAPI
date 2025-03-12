@@ -2,9 +2,11 @@
 using ETicaretAPI.Application.Abstractions.Services.Authentication;
 using ETicaretAPI.Application.Repositories;
 using ETicaretAPI.Application.Repositories.BasketItem;
+using ETicaretAPI.Application.Repositories.CompletedOrder;
 using ETicaretAPI.Domain.Entitites.Identity;
 using ETicaretAPI.Persistence.Contexts;
 using ETicaretAPI.Persistence.Repositories;
+using ETicaretAPI.Persistence.Repositories.CompletedOrder;
 using ETicaretAPI.Persistence.Repositories.File;
 using ETicaretAPI.Persistence.Repositories.InvoiceFile;
 using ETicaretAPI.Persistence.Repositories.ProductImageFile;
@@ -56,6 +58,9 @@ namespace ETicaretAPI.Persistence
 
             services.AddScoped<IBasketReadRepository, BasketReadRepository>();
             services.AddScoped<IBasketWriteRepository, BasketWriteRepository>();
+
+            services.AddScoped<ICompletedOrderReadRepository, CompletedOrderReadRepository>();
+            services.AddScoped<ICompletedOrderWriteRepository, CompletedOrderWriteRepository>();
 
 
 

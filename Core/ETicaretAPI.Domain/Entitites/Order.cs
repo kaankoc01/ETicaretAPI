@@ -15,6 +15,7 @@ namespace ETicaretAPI.Domain.Entitites
         //  public ICollection<Product> Products { get; set; }
         // 1 e çok ilişki
         //  public Customer Customer { get; set; }
+        public CompletedOrder CompletedOrder { get; set; }
 
     }
 }
