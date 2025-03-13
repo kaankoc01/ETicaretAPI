@@ -1,4 +1,7 @@
-﻿using ETicaretAPI.Application.Features.Commands.Product.CreateProduct;
+﻿using ETicaretAPI.Application.Const;
+using ETicaretAPI.Application.CustomAttributes;
+using ETicaretAPI.Application.Enums;
+using ETicaretAPI.Application.Features.Commands.Product.CreateProduct;
 using ETicaretAPI.Application.Features.Commands.Product.DeleteProduct;
 using ETicaretAPI.Application.Features.Commands.Product.UpdateProduct;
 using ETicaretAPI.Application.Features.Commands.ProductImageFile.ChangeShowCaseProductImage;
@@ -31,8 +34,6 @@ namespace ETicaretAPI.API.Controllers
             return Ok(response);
         }
 
-
-
         [HttpGet("{Id}")]
         public async Task<IActionResult> Get([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
@@ -42,6 +43,7 @@ namespace ETicaretAPI.API.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstans.Products, ActionType = ActionType.Writing, Definition = "Create Product")]
         public async Task<IActionResult> Post(CreateProductCommandRequest createProductCommandRequest)
         {
             CreateProductCommandResponse response = await _mediator.Send(createProductCommandRequest);
@@ -51,6 +53,7 @@ namespace ETicaretAPI.API.Controllers
 
         [HttpPut]
         [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstans.Products, ActionType = ActionType.Updating, Definition = "Update Product")]
         public async Task<IActionResult> Put([FromBody] UpdateProductCommandRequest updateProductCommandRequest)
         {
             UpdateProductCommandResponse response = await _mediator.Send(updateProductCommandRequest);
@@ -59,14 +62,17 @@ namespace ETicaretAPI.API.Controllers
 
         [HttpDelete("{Id}")]
         [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstans.Products, ActionType = ActionType.Deleting, Definition = "Delete Product")]
         public async Task<IActionResult> Delete([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
         {
             RemoveProductCommandResponse response = await _mediator.Send(removeProductCommandRequest);
             return Ok();
         }
+
         // burada id olmamasının nedeni, query stringden gelecek. /api/products?id=123
         [Authorize(AuthenticationSchemes = "Admin")]
         [HttpPost("[action]")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstans.Products, ActionType = ActionType.Writing, Definition = "Upload Product File")]
         public async Task<IActionResult> Upload([FromQuery] UploadProductImageCommandRequest uploadProductImageCommandRequest)
         {
             uploadProductImageCommandRequest.Files = Request.Form.Files;
@@ -74,10 +80,10 @@ namespace ETicaretAPI.API.Controllers
             return Ok(response);
         }
 
-
         //api/products/GetProductsImages/123 
         [HttpGet("[action]/{id}")]
         [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstans.Products, ActionType = ActionType.Reading, Definition = "Get Products Image")]
         public async Task<IActionResult> GetProductsImages([FromRoute] GetProductImagesQueryRequest getProductImagesQueryRequest)
         {
             List<GetProductImagesQueryResponse> response = await _mediator.Send(getProductImagesQueryRequest);
@@ -86,6 +92,7 @@ namespace ETicaretAPI.API.Controllers
 
         [HttpDelete("[action]/{Id}")]
         [Authorize(AuthenticationSchemes = "Admin")]
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstans.Products, ActionType = ActionType.Deleting, Definition = "Delete Product Image")]
         public async Task<IActionResult> DeleteProductImage([FromRoute] RemoveProductImageCommandRequest removeProductImageCommandRequest, [FromQuery] string imageId)
         {
             removeProductImageCommandRequest.ImageId = imageId;
@@ -93,11 +100,10 @@ namespace ETicaretAPI.API.Controllers
             return Ok();
         }
 
-
-
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        public async Task<IActionResult> ChangeShowcaseImage([FromQuery]ChangeShowcaseImageCommandRequest changeShowcaseImageCommandRequest)
+        [AuthorizeDefinition(Menu = AuthorizeDefinitionConstans.Products, ActionType = ActionType.Updating, Definition = "hange ShowCase Image")]
+        public async Task<IActionResult> ChangeShowcaseImage([FromQuery] ChangeShowcaseImageCommandRequest changeShowcaseImageCommandRequest)
         {
             ChangeShowcaseImageCommandResponse response = await _mediator.Send(changeShowcaseImageCommandRequest);
             return Ok(response);

@@ -76,25 +76,25 @@ namespace ETicaretAPI.Persistence.Services
 
         public async Task<SingleOrder> GetOrderByIdAsync(string id)
         {
-            var data =  _orderReadRepository.Table
+            var data = _orderReadRepository.Table
                                  .Include(o => o.Basket)
                                      .ThenInclude(b => b.BasketItems)
                                          .ThenInclude(bi => bi.Product);
             var data2 = await (from order in data
-                        join completedOrder in _completedOrderReadRepository.Table
-                        on order.Id equals completedOrder.OrderId into co
-                        from _co in co.DefaultIfEmpty()
-                        // hoca yazmadı where order.Id == Guid.Parse(id)
-                        select new
-                        {
-                            Id = order.Id,
-                            CreatedDate = order.CreatedDate,
-                            OrderCode = order.OrderCode,
-                            Basket = order.Basket,
-                            Completed = _co != null ? true : false,
-                            Address = order.Address,
-                            Description = order.Description,
-                        }).FirstOrDefaultAsync(o => o.Id == Guid.Parse(id));
+                               join completedOrder in _completedOrderReadRepository.Table
+                               on order.Id equals completedOrder.OrderId into co
+                               from _co in co.DefaultIfEmpty()
+                                   // hoca yazmadı where order.Id == Guid.Parse(id)
+                               select new
+                               {
+                                   Id = order.Id,
+                                   CreatedDate = order.CreatedDate,
+                                   OrderCode = order.OrderCode,
+                                   Basket = order.Basket,
+                                   Completed = _co != null ? true : false,
+                                   Address = order.Address,
+                                   Description = order.Description,
+                               }).FirstOrDefaultAsync(o => o.Id == Guid.Parse(id));
 
 
             return new()
@@ -111,22 +111,33 @@ namespace ETicaretAPI.Persistence.Services
                 Description = data2.Description,
                 OrderCode = data2.OrderCode,
                 Completed = data2.Completed
-                
+
             };
         }
 
 
-        public async Task CompleteOrderAsync(string id)
+        public async Task<(bool, CompletedOrderDTO)> CompleteOrderAsync(string id)
         {
-            Order order = await _orderReadRepository.GetByIdAsync(id);
+            Order? order = await _orderReadRepository.Table
+                .Include(o => o.Basket)
+                .ThenInclude(b => b.User)
+                .FirstOrDefaultAsync(o => o.Id == Guid.Parse(id));
             if (order != null)
             {
                 await _completedOrderWriteRepository.AddAsync(new()
                 {
                     OrderId = Guid.Parse(id)
                 });
-                await _completedOrderWriteRepository.SaveAsync();
+                return (await _completedOrderWriteRepository.SaveAsync() > 0, new()
+                {
+                    OrderCode = order.OrderCode,
+                    Username = order.Basket.User.UserName,
+                    OrderDate = order.CreatedDate,
+                    Email = order.Basket.User.Email
+                });
             }
+            return (false,null);
+
         }
     }
 }
